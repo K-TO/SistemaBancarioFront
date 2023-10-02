@@ -1,0 +1,21 @@
+<div class="modal-header">
+    <h4 class="modal-title">Cancelación de productos</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss(false)">
+        <i class="fa fa-times"></i>
+    </button>
+</div>
+<div class="modal-body">
+    <h5>El producto se cancelara.</h5>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item"><p>El producto sera cancelado siempre y cuando no tenga saldo (No aplica para CDT).</p></li>
+        <li class="list-group-item"><p>Si la cancelación es para CDT, los fondos e intereses generados seran abonados a la cuenta de ahorros del titular.</p></li>
+        <li class="list-group-item"><p>Despues de cancelado, un producto no puede ser re-activado, debera solicitarlo nuevamente.</p></li>
+    </ul>
+    <hr>
+    <button class="btn btn-fluid btn-danger" (click)="acceptedRequest()">
+        Cancelar Producto
+    </button>
+    <button class="btn btn-fluid btn-info" (click)="cancelRequest()">
+        Volver al modulo
+    </button>
+</div>

@@ -1,0 +1,24 @@
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Dashboard</h1>
+    <p class="mb-4">
+        Bienvenido al sistema Bancario de Satrack
+    </p>
+
+    <div class="card shadow mb-4">
+        <div *ngIf="messaje !== ''" class="alert alert-primary" [ngClass]="hasError ? 'alert-danger' : 'alert-success'"
+            role="alert">
+            {{messaje}}
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-xl-12 col-lg-12">
+                <div class="card shadow mb-12 xl-12 sm-12">
+                    <div class="card-body">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

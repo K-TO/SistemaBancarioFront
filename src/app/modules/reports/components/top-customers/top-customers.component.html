@@ -1,0 +1,107 @@
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Reporte de clientes</h1>
+    <p class="mb-4">
+         En este modulo podra visualizar el top 10 de clientes.
+     </p>
+  
+     <div class="row">
+         <div class="col-xl-12 col-lg-12">
+             <div class="card shadow mb-4">
+                 <div class="card-header py-3">
+                     <h6 class="m-0 font-weight-bold text-primary">Top clientes cuentas CDT</h6>
+                 </div>
+                 <div class="card-body" >
+                     <div class="table-responsive">
+                         <table class="table table-bordered" id="dataTableCdt" width="100%" cellspacing="0">
+                             <thead>
+                                 <tr>
+                                     <th>Nombre</th>
+                                     <th>Tipo</th>
+                                     <th>Saldo actual</th>
+                                     <th>Tipo de producto</th>
+                                 </tr>
+                             </thead>
+                             <tbody>
+                                 <tr *ngFor="let report of topReport.topForCDT">
+                                     <td>{{report.name}}</td>
+                                     <td>{{report.customerType | getNameCustomerTypeEnum }}</td>
+                                     <td>${{report.balance | number}}</td>
+                                     <td>CDT</td>
+                                 </tr>
+                             </tbody>
+                         </table>
+                     </div>
+ 
+                 </div>
+             </div>
+         </div>
+     </div>
+
+     <div class="row">
+        <div class="col-xl-12 col-lg-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Top clientes cuentas corrientes</h6>
+                </div>
+                <div class="card-body" >
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTableCurrent" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Tipo</th>
+                                    <th>Saldo actual</th>
+                                    <th>Tipo de producto</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let report of topReport.topForCurent">
+                                    <td>{{report.name}}</td>
+                                    <td>{{report.customerType | getNameCustomerTypeEnum }}</td>
+                                    <td>${{report.balance | number}}</td>
+                                    <td>Cuenta corriente</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-12 col-lg-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Top clientes cuentas de ahorros</h6>
+                </div>
+                <div class="card-body" >
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTableSavings" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Tipo</th>
+                                    <th>Saldo actual</th>
+                                    <th>Tipo de producto</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let report of topReport.topForSavings">
+                                    <td>{{report.name}}</td>
+                                    <td>{{report.customerType | getNameCustomerTypeEnum }}</td>
+                                    <td>${{report.balance | number}}</td>
+                                    <td>Cuenta de ahorros</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+ </div>
+ 

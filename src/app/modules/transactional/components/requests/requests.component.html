@@ -1,0 +1,88 @@
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Solicitudes</h1>
+    <p class="mb-4">
+        En este modulo podra solicitar la apertura o cancelación de productos.
+    </p>
+
+    <div class="row">
+        <div *ngIf="messaje !== ''" class="alert alert-primary" [ngClass]="hasError ? 'alert-danger' : 'alert-success'"
+            role="alert">
+            {{messaje}}
+        </div>
+
+        <div *ngIf="customerProducts; then customerProds else noCustomerProds"></div>
+        <ng-template #customerProds>
+            <div class="col-xl-6 col-lg-6 col-md-12 col-xs-12 col-sm-12"
+                *ngFor="let product of customerProducts; let i = index">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">{{ product.productType | getNameEnum }}</h6>
+                    </div>
+                    <div *ngIf="product; then withSavings else withoutSavings"></div>
+                    <ng-template #withSavings>
+                        <div class="card-body">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <span class="font-weight-bold">Saldo actual </span>
+                                    <span>${{product.currentBalance | number}}</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <span class="font-weight-bold">Interes </span>
+                                    <span>{{product.interest | number}}</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <span class="font-weight-bold">Fecha de creación </span>
+                                    <span>{{product.creationDate | date}}</span>
+                                </li>
+                            </ul>
+                            <br>
+                            <button type="button" class="btn btn-danger btn-block"
+                                (click)="disableProduct(customerId, product.id)">
+                                <i class="fab fa-form fa-fw"></i>Cancelar producto
+                            </button>
+                        </div>
+                    </ng-template>
+                    <ng-template #withoutSavings>
+                        <div class="card-body">
+                            <a href="#" class="btn btn-info btn-block"><i class="fab fa-form fa-fw"></i>Solicitar
+                                producto</a>
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template #noCustomerProds>
+            <h2 class="text-center">No tienes ningún producto.</h2>
+        </ng-template>
+    </div>
+
+    <div class="row">
+        <div *ngIf="avaiableProducts; then customerAvaiableProds else noCustomerAvaiableProds"></div>
+        <ng-template #customerAvaiableProds>
+            <div class="col-xl-6 col-lg-6 col-md-12 col-xs-12 col-sm-12"
+                *ngFor="let product of avaiableProducts; let i = index">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">{{ product | getNameEnum }}</h6>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <p>Producto disponible para solicitud.</p>
+                            </li>
+                        </ul>
+                        <br>
+                        <button type="button" (click)="enableProduct(customerId, product)"
+                            class="btn btn-info btn-block">
+                            <i class="fa fa-check-square-o"></i>Solicitar producto
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template #noCustomerAvaiableProds>
+            <h2 class="text-center">No tienes productos disponibles.</h2>
+        </ng-template>
+    </div>
+</div>

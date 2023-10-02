@@ -1,0 +1,38 @@
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Reporte de promedio</h1>
+    <p class="mb-4">
+         En este modulo podra visualizar el reporte promedio de cuentas de clientes.
+     </p>
+  
+     <div class="row">
+         <div class="col-xl-12 col-lg-12">
+             <div class="card shadow mb-4">
+                 <div class="card-header py-3">
+                     <h6 class="m-0 font-weight-bold text-primary"></h6>
+                 </div>
+                 <div class="card-body">
+         
+                     <div class="table-responsive">
+                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                             <thead>
+                                 <tr>
+                                     <th>Tipo de producto</th>
+                                     <th>Saldo Promedio</th>
+                                 </tr>
+                             </thead>
+                             <tbody>
+                                 <tr *ngFor="let item of report">
+                                     <td>{{item.productType | getNameEnum }}</td>
+                                     <td>${{item.averageBalance | number}}</td>
+                                 </tr>
+                             </tbody>
+                         </table>
+                     </div>
+ 
+                 </div>
+             </div>
+         </div>
+     </div>
+ </div>
+ 

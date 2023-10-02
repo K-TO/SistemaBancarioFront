@@ -1,0 +1,168 @@
+<div class="container">
+    <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+                <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                <div class="col-lg-7">
+                    <div class="p-5">
+                        <div *ngIf="messaje !== ''" class="alert alert-primary"
+                            [ngClass]="hasError ? 'alert-danger' : 'alert-success'" role="alert">
+                            {{messaje}}
+                        </div>
+                        <div class="text-center">
+                            <h1 class="h4 text-gray-900 mb-4">Crea tu cuenta!</h1>
+                        </div>
+                        <form [formGroup]="form" (ngSubmit)="registerUser()" class="user">
+                            <div class="form-group row">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <input type="text" class="form-control form-control-user" id="exampleFirstName"
+                                        [ngClass]="{ 'is-invalid': submitted && f['name'].errors }" placeholder="Nombre"
+                                        formControlName="name" name="name">
+                                    <div *ngIf="submitted && f['name'].errors" class="invalid-feedback">
+                                        <div *ngIf="f['name'].errors['required']">El nombre es requerido.</div>
+                                        <div *ngIf="f['name'].errors['minLength']">Minimo 4 caracteres.</div>
+                                        <div *ngIf="f['name'].errors['maxLength']">Maximo 50 caracteres.</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <select #custType placeholder="Tipo de cliente"
+                                        (change)="changeAccountType(custType.value)" formControlName="customerType"
+                                        name="customerType" id="customerType_"
+                                        class="form-control form-control-user form-register-select ng-invalid ng-dirty ng-touched"
+                                        name="customerType" id="customerType"
+                                        [ngClass]="{ 'is-invalid': submitted && f['customerType'].errors }">
+                                        <option value="" selected>Tipo de cliente</option>
+                                        <option *ngFor="let customerType of customerTypes" [value]="customerType"
+                                            [ngValue]="customerType">
+                                            {{customerType | getNameCustomerTypeEnum}}
+                                        </option>
+                                    </select>
+                                    <div *ngIf="submitted && f['customerType'].errors" class="invalid-feedback">
+                                        <div *ngIf="f['customerType'].errors['required']">El tipo de cliente es
+                                            requerido.</div>
+                                        <div *ngIf="f['customerType'].errors['minLength']">El tipo de cliente es
+                                            requerido.</div>
+                                        <div *ngIf="f['customerType'].errors['maxLength']">El tipo de cliente es
+                                            requerido.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="cellPhone" class="form-control form-control-user" id="cellPhone"
+                                    [ngClass]="{ 'is-invalid': submitted && f['cellPhone'].errors }"
+                                    placeholder="Número celular" formControlName="cellPhone" name="cellPhone">
+                                <div *ngIf="submitted && f['cellPhone'].errors" class="invalid-feedback">
+                                    <div *ngIf="f['cellPhone'].errors['required']">El número de télefono es requerido.
+                                    </div>
+                                    <div *ngIf="f['cellPhone'].errors['pattern']">El número de télefono no tiene un
+                                        formato correcto.</div>
+                                    <div *ngIf="f['cellPhone'].errors['minLength']">Minimo 10 caracteres.</div>
+                                    <div *ngIf="f['cellPhone'].errors['maxLength']">Maximo 10 caracteres.</div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <select formControlName="documentType" name="documentType" id="documentType"
+                                        class="form-control form-control-user form-register-select ng-invalid ng-dirty ng-touched"
+                                        name="documentType" id="documentType" placeholder="Tipo de documento"
+                                        [ngClass]="{ 'is-invalid': submitted && f['documentType'].errors }">
+                                        <option value="" selected>Tipo de documento</option>
+                                        <option [ngValue]="docType" [value]="docType"
+                                            *ngFor="let docType of documentTypes">{{docType |
+                                            getNameDocumentTypeEnum}}</option>
+                                    </select>
+                                    <div *ngIf="submitted && f['documentType'].errors" class="invalid-feedback">
+                                        <div *ngIf="f['documentType'].errors['required']">El tipo de documento es
+                                            requerido.</div>
+                                        <div *ngIf="f['documentType'].errors['minLength']">El tipo de documento es
+                                            requerido.</div>
+                                        <div *ngIf="f['documentType'].errors['maxLength']">El tipo de documento es
+                                            requerido.</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control form-control-user" id="identification"
+                                        [ngClass]="{ 'is-invalid': submitted && f['identification'].errors }"
+                                        placeholder="Identificación" formControlName="identification"
+                                        name="identification">
+                                    <div *ngIf="submitted && f['identification'].errors" class="invalid-feedback">
+                                        <div *ngIf="f['identification'].errors['required']">La identificación es
+                                            requerida.</div>
+                                        <div *ngIf="f['identification'].errors['minLength']">Minimo 4 caracteres.</div>
+                                        <div *ngIf="f['identification'].errors['maxLength']">Maximo 50 caracteres.</div>
+                                        <div *ngIf="f['identification'].errors['pattern']">La identificación no
+                                            tiene un formato correcto.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row" [hidden]="accountType == 1">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <input type="text" class="form-control form-control-user" id="legalRepresentName"
+                                        [ngClass]="{ 'is-invalid': submitted && f['legalRepresentName'].errors }"
+                                        placeholder="Nombre del representante legal"
+                                        formControlName="legalRepresentName" name="legalRepresentName">
+                                    <div *ngIf="submitted && f['legalRepresentName'].errors" class="invalid-feedback">
+                                        <div *ngIf="f['legalRepresentName'].errors['required']">El nombre es requerido.
+                                        </div>
+                                        <div *ngIf="f['legalRepresentName'].errors['minLength']">Minimo 4 caracteres.
+                                        </div>
+                                        <div *ngIf="f['legalRepresentName'].errors['maxLength']">Maximo 50 caracteres.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control form-control-user" id="legalRepresentPhone"
+                                        [ngClass]="{ 'is-invalid': submitted && f['legalRepresentPhone'].errors }"
+                                        placeholder="Télefono representante legal" formControlName="legalRepresentPhone"
+                                        name="legalRepresentPhone">
+                                    <div *ngIf="submitted && f['legalRepresentPhone'].errors" class="invalid-feedback">
+                                        <div *ngIf="f['legalRepresentPhone'].errors['required']">El apellido es
+                                            requerido.</div>
+                                        <div *ngIf="f['legalRepresentPhone'].errors['minLength']">Minimo 4 caracteres.
+                                        </div>
+                                        <div *ngIf="f['legalRepresentPhone'].errors['maxLength']">Maximo 50 caracteres.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <input type="password" class="form-control form-control-user"
+                                        [ngClass]="{ 'is-invalid': submitted && f['password'].errors }" id="password"
+                                        placeholder="Contraseña" formControlName="password" name="password">
+                                    <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+                                        <div *ngIf="f['password'].errors['minLength']">Minimo 4 caracteres.</div>
+                                        <div *ngIf="f['password'].errors['maxLength']">Maximo 50 caracteres.</div>
+                                        <div *ngIf="f['password'].errors['required']">La contraseña es requerida.</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="password" class="form-control form-control-user"
+                                        [ngClass]="{ 'is-invalid': submitted && f['repeatPassword'].errors }"
+                                        id="repeatpassword" placeholder="Repetir contraseña"
+                                        formControlName="repeatPassword" name="repeatPassword">
+                                    <div *ngIf="submitted && f['repeatPassword'].errors" class="invalid-feedback">
+                                        <div *ngIf="f['repeatPassword'].errors['minLength']">Minimo 4 caracteres.</div>
+                                        <div *ngIf="f['repeatPassword'].errors['maxLength']">Maximo 50 caracteres.</div>
+                                        <div *ngIf="f['repeatPassword'].errors['required']">La confirmación de
+                                            contraseña es requerida.</div>
+                                        <div *ngIf="f['repeatPassword'].errors['confirmPasswordValidator']">Las
+                                            contraseñas no coinciden.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary btn-user btn-block" type="submit">
+                                Registrarse
+                            </button>
+                        </form>
+                        <hr>
+                        <div class="text-center">
+                            <a class="small" routerLink="/auth" href="#">¿Ya tienes una cuenta? ¡Inicia sesión!</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

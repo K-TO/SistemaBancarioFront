@@ -1,0 +1,95 @@
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Proyecciones</h1>
+    <p class="mb-4">
+        En este modulo podra realizar proyecciones sobre nuestros productos.
+    </p>
+
+    <div class="card shadow mb-4">
+        <div *ngIf="messaje !== ''" class="alert alert-primary" [ngClass]="hasError ? 'alert-danger' : 'alert-success'"
+            role="alert">
+            {{messaje}}
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-xl-12 col-lg-12">
+                <div class="card shadow mb-12 xl-12 sm-12">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary"></h6>
+                    </div>
+                    <div class="card-body">
+                        <form [formGroup]="projectionForm" (ngSubmit)="makeProjection()" class="needs-validation"
+                            novalidate>
+                            <div class="form-row">
+                                <div class="col-lg-3 col-md-4 mb-3">
+                                    <label for="beginDate">Fecha inicial</label>
+                                    <input type="date" class="form-control" id="beginDate"
+                                        [ngClass]="{ 'is-invalid': submitted && f['beginDate'].errors }" placeholder=""
+                                        formControlName="beginDate" name="beginDate" value="Mark" required>
+                                    <div *ngIf="submitted && f['beginDate'].errors" class="invalid-feedback">
+                                        <div *ngIf="f['beginDate'].errors['required']">La fecha inicial es requerida.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-4 mb-3">
+                                    <label for="endDate">Fecha final</label>
+                                    <input type="date" class="form-control" id="endDate"
+                                        [ngClass]="{ 'is-invalid': submitted && f['endDate'].errors }" placeholder=""
+                                        value="" formControlName="endDate" name="endDate" required>
+                                    <div *ngIf="submitted && f['endDate'].errors" class="invalid-feedback">
+                                        <div *ngIf="f['endDate'].errors['required']">La fecha final es requerida.</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 mb-3">
+                                    <label for="money">Valor de inversión</label>
+                                    <input type="number" formControlName="money" name="money" class="form-control"
+                                        id="money" placeholder=""
+                                        [ngClass]="{ 'is-invalid': submitted && f['money'].errors }" required>
+                                    <div *ngIf="submitted && f['money'].errors" class="invalid-feedback">
+                                        <div *ngIf="f['money'].errors['required']">El valor monetario es requerido.
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-3 col-md-3 mb-3">
+                                    <label for="interest">% de interes</label>
+                                    <input type="number" class="form-control" id="interest" placeholder=""
+                                        formControlName="interest" name="interest"
+                                        [ngClass]="{ 'is-invalid': submitted && f['interest'].errors }" required>
+                                    <div *ngIf="submitted && f['interest'].errors" class="invalid-feedback">
+                                        <div *ngIf="f['interest'].errors['required']">El % de interes es requerido.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn btn-info btn-block" type="submit">Obtener proyección</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow mb-4" [hidden]="!proyectionResults">
+        <div class="row">
+            <div class="col-xl-12 col-lg-12">
+                <div class="card shadow mb-12 xl-12 sm-12">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary"></h6>
+                    </div>
+                    <div class="card-body">
+                        <h3>Resultados de proyección</h3>
+                        <hr>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><b>Valor de inversión: </b>${{projection.money | number}}</li>
+                            <li class="list-group-item"><b>Tiempo en días: </b> {{projection.totalDays}} </li>
+                            <li class="list-group-item"><b>Tiempo en meses: </b> {{projection.totalMonths}}</li>
+                            <li class="list-group-item"><b>Total de intereses: </b>${{projection.totalInterest | number}} </li>
+                            <li class="list-group-item"><b>Total recaudado: </b>${{(projection.money + projection.totalInterest) | number}} </li>
+                          </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

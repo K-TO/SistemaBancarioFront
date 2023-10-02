@@ -1,0 +1,46 @@
+<div class="modal-header">
+    <h4 class="modal-title">Solicitud de productos</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <i class="fa fa-times"></i>
+    </button>
+</div>
+<div>
+    <div *ngIf="messaje !== ''" class="alert alert-primary" [ngClass]="hasError ? 'alert-danger' : 'alert-success'"
+        role="alert">
+        {{messaje}}
+    </div>
+    <form [formGroup]="myForm" (ngSubmit)="submitForm()">
+        <div class="modal-boy">
+            <div class="container">
+                <div class="form-group">
+                    <label for="currentBalance">Saldo de apertura de cuenta</label>
+                    <input type="number" class="form-control" formControlName="currentBalance"
+                        placeholder="Saldo de apertura de cuenta"
+                        [ngClass]="{ 'is-invalid': submitted && f['currentBalance'].errors }" />
+                    <div *ngIf="submitted && f['currentBalance'].errors" class="invalid-feedback">
+                        <div *ngIf="f['currentBalance'].errors['required']">El saldo inicial es requerido.</div>
+                        <div *ngIf="f['currentBalance'].errors['min']">El saldo inicial debe ser mayor a $10.000.</div>
+                        <div *ngIf="f['currentBalance'].errors['pattern']">El saldo inicial no tiene un
+                            formato correcto.</div>
+                    </div>
+                </div>
+                <div class="form-group" [hidden]="hideInterest">
+                    <label for="interest">Intereses</label>
+                    <input type="number" class="form-control" formControlName="interest" placeholder="Intereses"
+                        [ngClass]="{ 'is-invalid': submitted && f['interest'].errors }" />
+                    <div *ngIf="submitted && f['interest'].errors" class="invalid-feedback">
+                        <div *ngIf="f['interest'].errors['min']">El valor del interes debe ser mayor al 0%.</div>
+                        <div *ngIf="f['interest'].errors['max']">El valor del interes debe ser menor al 10%.</div>
+                        <div *ngIf="f['interest'].errors['pattern']">El valor del interes no tiene un
+                            formato correcto.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-info btn-block" >
+                Completar solicitud
+            </button>
+        </div>
+    </form>
+</div>
